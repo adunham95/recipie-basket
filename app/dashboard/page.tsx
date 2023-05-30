@@ -1,9 +1,9 @@
 import React from 'react';
 
-const Dashboard = ({ children }: { children: React.ReactNode }) => {
+const Dashboard = () => {
   return (
     <section>
-      <div>{children}</div>
+      <h1>Dashboard</h1>
     </section>
   );
 };
