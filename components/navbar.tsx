@@ -4,6 +4,7 @@ import Logo, { LogoWide } from './logo';
 import { NavLink } from './navLink';
 import { useSession } from 'next-auth/react';
 import { LoginButton, LogoutButton, ProfileButton } from './authButtons';
+import { Avatar } from './avatar';
 
 const links = [
   {
@@ -42,8 +43,9 @@ const NavProfile = ({
         {img && showImage && (
           <img className="h-10 w-10 rounded-full" src={img} alt="" />
         )}
+        {!img && showImage && <Avatar />}
       </div>
-      <div className={`${showImage && img && 'ml-3'}`}>
+      <div className={`${showImage && 'ml-3'}`}>
         <div className="text-base font-medium text-gray-800">{name}</div>
         <div className="text-sm font-medium text-gray-500">{email}</div>
       </div>
@@ -107,11 +109,15 @@ export const Nav = (props: INavProps) => {
                       onClick={() => setProfileExpanded(!profileExpanded)}
                     >
                       <span className="sr-only">Open user menu</span>
-                      <img
-                        className="h-8 w-8 rounded-full"
-                        src={session?.user?.image || ''}
-                        alt=""
-                      />
+                      {session?.user?.image ? (
+                        <img
+                          className="h-8 w-8 rounded-full"
+                          src={session?.user?.image || ''}
+                          alt=""
+                        />
+                      ) : (
+                        <Avatar />
+                      )}
                     </button>
                   </div>
                   <div
