@@ -7,7 +7,6 @@ export const User = () => {
 
   return (
     <>
-      <h1>Client Session</h1>
       <pre className=" whitespace-break-spaces">{JSON.stringify(session)}</pre>
     </>
   );
