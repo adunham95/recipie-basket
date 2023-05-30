@@ -1,11 +1,15 @@
+import Header from '@/components/header';
 import { User } from '@/components/user';
 import React from 'react';
 
 const Profile = async () => {
   return (
-    <div>
-      <User />
-    </div>
+    <>
+      <Header title="Profile" />
+      <div>
+        <User />
+      </div>
+    </>
   );
 };
 
