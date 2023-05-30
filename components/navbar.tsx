@@ -5,6 +5,7 @@ import { NavLink } from './navLink';
 import { useSession } from 'next-auth/react';
 import { LoginButton, LogoutButton, ProfileButton } from './authButtons';
 import { Avatar } from './avatar';
+import { twMerge } from 'tailwind-merge';
 
 const links = [
   {
@@ -38,7 +39,7 @@ const NavProfile = ({
   containerClassName?: string;
 }) => {
   return (
-    <div className={`flex items-center px-4 ${containerClassName}`}>
+    <div className={twMerge(`flex items-center px-4`, containerClassName)}>
       <div className="flex-shrink-0">
         {img && showImage && (
           <img className="h-10 w-10 rounded-full" src={img} alt="" />
