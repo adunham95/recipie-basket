@@ -7,6 +7,7 @@ builder.prismaObject('User', {
     email: t.exposeString('email', { nullable: true }),
     image: t.exposeString('image', { nullable: true }),
     bookmarks: t.relation('bookmarks', { nullable: true }),
+    recipes: t.relation('recipies', { nullable: true }),
   }),
 });
 

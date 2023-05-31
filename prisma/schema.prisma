@@ -73,7 +73,7 @@ model Ingredients{
   recipeID      String @db.ObjectId
   recipe        Recipe @relation(fields: [recipeID], references: [id])
   item          String
-  count         Int
+  count         Float
   type          String
 }
 
