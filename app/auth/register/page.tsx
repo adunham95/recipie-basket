@@ -10,7 +10,8 @@ const Page = () => {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [formValues, setFormValues] = useState({
-    name: '',
+    firstName: '',
+    lastName: '',
     email: '',
     password: '',
   });
@@ -65,9 +66,16 @@ const Page = () => {
         <div>
           <form onSubmit={onSubmit} className="space-y-6">
             <TextInput
-              label="Name"
-              id="name"
-              value={formValues.name}
+              label="First Name"
+              id="firstName"
+              value={formValues.firstName}
+              onChange={handleChange}
+            />
+
+            <TextInput
+              label="Last Name"
+              id="lastName"
+              value={formValues.lastName}
               onChange={handleChange}
             />
 
