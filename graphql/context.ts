@@ -10,6 +10,8 @@ interface CustomSession extends Session {
     image?: string | null;
     id?: string | null;
     randomKey?: string | null;
+    primaryColor?: string | null;
+    secondaryColor?: string | null;
   };
 }
 

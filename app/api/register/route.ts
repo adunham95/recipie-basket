@@ -2,6 +2,7 @@ import { prisma } from '@/lib/prisma';
 import { hash } from 'bcryptjs';
 import { NextResponse } from 'next/server';
 
+//TODO Remove api call
 export async function POST(req: Request) {
   try {
     const { name, email, password } = (await req.json()) as {
@@ -13,7 +14,8 @@ export async function POST(req: Request) {
 
     const user = await prisma.user.create({
       data: {
-        name,
+        firstName: name,
+        lastName: '',
         email: email.toLowerCase(),
         password: hashed_password,
       },
@@ -21,7 +23,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json({
       user: {
-        name: user.name,
+        name: user.firstName,
         email: user.email,
       },
     });

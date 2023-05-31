@@ -38,6 +38,8 @@ export const authOptions: NextAuthOptions = {
           firstName: user.firstName,
           lastName: user.lastName,
           name: `${user.firstName} ${user.lastName}`,
+          primaryColor: user.primaryColor,
+          secondaryColor: user.secondaryColor,
           randomKey: 'Hey cool',
         };
       },

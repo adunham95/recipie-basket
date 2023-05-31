@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { LoginButton } from '@/components/authButtons';
 
+//TODO convert to use `createUser` mutation
 const Page = () => {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
