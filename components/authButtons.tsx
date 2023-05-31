@@ -1,5 +1,6 @@
 'use client';
 
+import { APP_URL, AUTH_URL } from '@/lib/appUrls';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
 
@@ -24,7 +25,7 @@ export const RegisterButton = ({
   className = '',
 }: IAuthButton) => {
   return (
-    <Link href="/register" className={className}>
+    <Link href={AUTH_URL.REGISTER} className={className}>
       {children}
     </Link>
   );
@@ -46,7 +47,7 @@ export const ProfileButton = ({
   className = '',
 }: IAuthButton) => {
   return (
-    <Link href="/profile" className={className}>
+    <Link href={APP_URL.PROFILE} className={className}>
       {children}
     </Link>
   );
@@ -66,23 +67,15 @@ export const AccountButton = (props: IAccountButton) => {
   if (session) {
     return (
       <>
-        <button className={secondaryClassName} onClick={() => signOut()}>
-          Sign Out
-        </button>
-        <Link href="/profile" className={primaryClassName}>
-          Profile
-        </Link>
+        <LogoutButton className={secondaryClassName} />
+        <ProfileButton className={primaryClassName} />
       </>
     );
   }
   return (
     <>
-      <Link href="/register" className={secondaryClassName}>
-        Register
-      </Link>
-      <button className={primaryClassName} onClick={() => signIn()}>
-        Sign in
-      </button>
+      <RegisterButton className={secondaryClassName} />
+      <LoginButton className={primaryClassName} />
     </>
   );
 };

@@ -6,10 +6,11 @@ import { useSession } from 'next-auth/react';
 import { LoginButton, LogoutButton, ProfileButton } from './authButtons';
 import { Avatar } from './avatar';
 import { twMerge } from 'tailwind-merge';
+import { APP_URL } from '@/lib/appUrls';
 
 const links = [
   {
-    path: '/dashboard',
+    path: APP_URL.DASHBOARD,
     label: 'Dashboard',
   },
 ];

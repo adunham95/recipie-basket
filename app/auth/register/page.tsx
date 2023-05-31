@@ -3,6 +3,7 @@ import TextInput from '@/components/inputs/text-input';
 import { LogoWide } from '@/components/logo';
 import React, { useState } from 'react';
 import { signIn } from 'next-auth/react';
+import { LoginButton } from '@/components/authButtons';
 
 const Page = () => {
   const [loading, setLoading] = useState(false);
@@ -53,12 +54,9 @@ const Page = () => {
         </h2>
         <p className="mt-2 text-sm leading-6 text-gray-500">
           Already have an account?
-          <button
-            onClick={() => signIn()}
-            className="ml-1 font-semibold text-primary hover:text-primary-light"
-          >
+          <LoginButton className="ml-1 font-semibold text-primary hover:text-primary-light">
             Login
-          </button>
+          </LoginButton>
         </p>
       </div>
 
