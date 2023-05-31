@@ -4,11 +4,11 @@ import { LogoWide } from '@/components/logo';
 import React, { useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { LoginButton } from '@/components/authButtons';
+import { useCreateUser } from '@/grahql-hook/mutation/createUser';
 
 //TODO convert to use `createUser` mutation
 const Page = () => {
-  const [loading, setLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+  const { isLoading, mutateAsync: createUser } = useCreateUser();
   const [formValues, setFormValues] = useState({
     firstName: '',
     lastName: '',
@@ -18,28 +18,13 @@ const Page = () => {
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-
     try {
-      const res = await fetch('/api/register', {
-        method: 'POST',
-        body: JSON.stringify(formValues),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      setLoading(false);
-      if (!res.ok) {
-        setErrorMessage((await res.json()).message);
-        return;
-      }
+      const user = await createUser(formValues);
+      console.log({ user });
 
       signIn(undefined, { callbackUrl: '/' });
     } catch (error: any) {
-      setLoading(false);
       console.error(error);
-      setErrorMessage(error.message);
     }
   };
 
@@ -95,11 +80,11 @@ const Page = () => {
 
             <div>
               <button
-                disabled={loading}
+                disabled={isLoading}
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-primary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-primary-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
               >
-                {loading ? 'Loading...' : 'Register'}
+                {isLoading ? 'Loading...' : 'Register'}
               </button>
             </div>
           </form>
