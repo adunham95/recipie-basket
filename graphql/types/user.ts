@@ -8,6 +8,13 @@ builder.prismaObject('User', {
     image: t.exposeString('image', { nullable: true }),
     bookmarks: t.relation('bookmarks', { nullable: true }),
     recipes: t.relation('recipies', { nullable: true }),
+    firstName: t.exposeString('firstName'),
+    lastName: t.exposeString('lastName'),
+    name: t.string({
+      resolve: (parent) => {
+        return `${parent?.firstName} ${parent.lastName}`;
+      },
+    }),
   }),
 });
 

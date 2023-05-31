@@ -3,6 +3,8 @@ import { Session, getServerSession } from 'next-auth';
 
 interface CustomSession extends Session {
   user?: {
+    firstName?: string | null;
+    lastName?: string | null;
     name?: string | null;
     email?: string | null;
     image?: string | null;
