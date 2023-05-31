@@ -1,9 +1,10 @@
 import React from 'react';
+import { twMerge } from 'tailwind-merge';
 
 const Logo = ({ className = '' }: { className?: string }) => {
   return (
     <svg
-      className={className}
+      className={twMerge('h-8 w-auto fill-primary', className)}
       viewBox="0 0 512.00002 512.00001"
       version="1.1"
       id="svg52"
@@ -37,7 +38,7 @@ const LogoWide = ({ className = '' }: { className?: string }) => {
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 369.6551724137931 60.761197445168705"
       preserveAspectRatio="xMidYMid meet"
-      className={className}
+      className={twMerge('h-8 w-auto fill-primary', className)}
       id="ebhgcdbg"
     >
       <defs id="SvgjsDefs1011"></defs>
@@ -61,5 +62,21 @@ const LogoWide = ({ className = '' }: { className?: string }) => {
   );
 };
 
+const ResponsiveLogo = ({ className = '' }: { className?: string }) => {
+  return (
+    <>
+      <Logo
+        className={twMerge('sm:hidden h-8 w-auto fill-primary', className)}
+      />
+      <LogoWide
+        className={twMerge(
+          'hidden sm:block h-8 w-auto fill-primary',
+          className,
+        )}
+      />
+    </>
+  );
+};
+
 export default Logo;
-export { LogoWide };
+export { LogoWide, ResponsiveLogo };

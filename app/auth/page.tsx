@@ -1,26 +1,13 @@
-import {
-  LoginButton,
-  LogoutButton,
-  ProfileButton,
-  RegisterButton,
-} from '../../components/authButtons';
+'use client';
+import { useState } from 'react';
 
 export default function Home() {
-  return (
-    <main
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '70vh',
-      }}
-    >
-      <div>
-        <LoginButton />
-        <RegisterButton />
-        <LogoutButton />
-        <ProfileButton />
-      </div>
-    </main>
-  );
+  const [view, setView] = useState('login');
+  switch (view) {
+    case 'login':
+      return 'login';
+
+    default:
+      return 'default';
+  }
 }
