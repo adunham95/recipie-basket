@@ -1,22 +1,8 @@
 import { authOptions } from '@/lib/auth';
-import { Session, getServerSession } from 'next-auth';
-
-interface CustomSession extends Session {
-  user?: {
-    firstName?: string | null;
-    lastName?: string | null;
-    name?: string | null;
-    email?: string | null;
-    image?: string | null;
-    id?: string | null;
-    randomKey?: string | null;
-    primaryColor?: string | null;
-    secondaryColor?: string | null;
-  };
-}
+import { getServerSession } from 'next-auth';
 
 export async function createContext() {
-  const session = (await getServerSession(authOptions)) as CustomSession | null;
+  const session = await getServerSession(authOptions);
   console.log({ session });
 
   // if the user is not logged in, return an empty object
