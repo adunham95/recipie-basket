@@ -1,7 +1,5 @@
 import Container from '@/components/container';
 import FilterHeader from '@/components/filterHeader/';
-import CategorySelector from '@/components/inputs/category-selector';
-import SearchInput from '@/components/inputs/search-input';
 import RecipeCardSmall from '@/components/recipe-card/recipe-card-small';
 import React from 'react';
 

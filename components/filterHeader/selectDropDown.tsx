@@ -3,12 +3,21 @@ import React, { useState } from 'react';
 
 interface ISelectDropDownProps {
   title: string;
-  checked: string[];
+  checked?: string[];
+  options: string[];
+  onSelect: (selected: string[]) => void;
 }
 
 const SelectDropDown = (props: ISelectDropDownProps) => {
-  const { title, checked = [] } = props;
+  const { title, checked = [], options, onSelect } = props;
   const [open, setOpen] = useState(false);
+  function handleChange(name: string, isSelected: boolean) {
+    if (isSelected) {
+      onSelect([...checked, name]);
+    } else {
+      onSelect([...checked].filter((c) => c !== name));
+    }
+  }
   return (
     <div className="relative inline-block px-4 text-left">
       <button
@@ -53,52 +62,24 @@ const SelectDropDown = (props: ISelectDropDownProps) => {
         }`}
       >
         <form className="space-y-4">
-          <div className="flex items-center">
-            <input
-              id="filter-category-0"
-              name="category[]"
-              value="new-arrivals"
-              type="checkbox"
-              className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-            />
-            <label
-              htmlFor="filter-category-0"
-              className="ml-3 whitespace-nowrap pr-6 text-sm font-medium text-gray-900"
-            >
-              All New Arrivals
-            </label>
-          </div>
-          <div className="flex items-center">
-            <input
-              id="filter-category-1"
-              name="category[]"
-              value="tees"
-              type="checkbox"
-              className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-            />
-            <label
-              htmlFor="filter-category-1"
-              className="ml-3 whitespace-nowrap pr-6 text-sm font-medium text-gray-900"
-            >
-              Tees
-            </label>
-          </div>
-          <div className="flex items-center">
-            <input
-              id="filter-category-2"
-              name="category[]"
-              value="objects"
-              type="checkbox"
-              checked
-              className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-            />
-            <label
-              htmlFor="filter-category-2"
-              className="ml-3 whitespace-nowrap pr-6 text-sm font-medium text-gray-900"
-            >
-              Objects
-            </label>
-          </div>
+          {options.map((opt) => (
+            <div key={opt} className="flex items-center">
+              <input
+                id={`dropdown-${opt}`}
+                name="category[]"
+                value="new-arrivals"
+                type="checkbox"
+                onChange={(e) => handleChange(opt, e.target.checked)}
+                className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary-light"
+              />
+              <label
+                htmlFor={`dropdown-${opt}`}
+                className="ml-3 whitespace-nowrap pr-6 text-sm font-medium text-gray-900"
+              >
+                {opt}
+              </label>
+            </div>
+          ))}
         </form>
       </div>
     </div>

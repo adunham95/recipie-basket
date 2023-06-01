@@ -5,11 +5,46 @@ import SearchInput from '../inputs/search-input';
 import SelectList from './selectList';
 
 interface IFilterHeaderProps {
-  filter?: [];
+  option?: string;
 }
+
+const selectOptions = [
+  {
+    id: 'category',
+    title: 'Category',
+    options: ['Breakfast', 'Lunch', 'Dinner', 'Snack', 'Sushi', 'Seafood'],
+  },
+  {
+    id: 'ingredients',
+    title: 'Ingredients',
+    options: ['Shrimp', 'Eel'],
+  },
+];
 
 const FilterHeader = (props: IFilterHeaderProps) => {
   const [showMobileFilter, setShowMobileFilter] = useState(false);
+  const [selectedFilter, setSelectedFilter] = useState<{
+    [key: string]: string[];
+  }>({});
+
+  function handleSelect(val: string[], name: string) {
+    console.log({ name, val });
+    setSelectedFilter({
+      ...selectedFilter,
+      [name]: val,
+    });
+  }
+
+  function removeItemFromFilter(val: string, key: string) {
+    setSelectedFilter({
+      ...selectedFilter,
+      [key]: selectedFilter[key].filter((v) => v !== val),
+    });
+  }
+
+  const filterValues = Object.values(selectedFilter).flat();
+  console.log({ filterValues, selectedFilter });
+
   return (
     <div className="bg-white mb-3">
       <div
@@ -50,9 +85,15 @@ const FilterHeader = (props: IFilterHeaderProps) => {
 
             {/* <!-- Filters --> */}
             <form className="mt-4">
-              <SelectList title="Categry" />
-              <SelectList title="Color" />
-              <SelectList title="Size" />
+              {selectOptions.map((opt) => (
+                <SelectList
+                  key={opt.id}
+                  title={opt.title}
+                  options={opt.options}
+                  checked={selectedFilter[opt.id]}
+                  onSelect={(o) => handleSelect(o, opt.id)}
+                />
+              ))}
             </form>
           </div>
         </div>
@@ -79,9 +120,15 @@ const FilterHeader = (props: IFilterHeaderProps) => {
             <div className="hidden sm:block">
               <div className="flow-root">
                 <div className="-mx-4 flex items-center divide-x divide-gray-200">
-                  <SelectDropDown title="Category" checked={[]} />
-                  <SelectDropDown title="Color" checked={[]} />
-                  <SelectDropDown title="Style" checked={[]} />
+                  {selectOptions.map((opt) => (
+                    <SelectDropDown
+                      key={opt.id}
+                      title={opt.title}
+                      options={opt.options}
+                      checked={selectedFilter[opt.id]}
+                      onSelect={(o) => handleSelect(o, opt.id)}
+                    />
+                  ))}
                 </div>
               </div>
             </div>
@@ -102,28 +149,42 @@ const FilterHeader = (props: IFilterHeaderProps) => {
             ></div>
 
             <div className="mt-2 sm:ml-4 sm:mt-0">
-              <div className="-m-1 flex flex-wrap items-center">
-                <span className="m-1 inline-flex items-center rounded-full border border-gray-200 bg-white py-1.5 pl-3 pr-2 text-sm font-medium text-gray-900">
-                  <span>Food</span>
-                  <button
-                    type="button"
-                    className="ml-1 inline-flex h-4 w-4 flex-shrink-0 rounded-full p-1 text-gray-400 hover:bg-gray-200 hover:text-gray-500"
-                  >
-                    <span className="sr-only">Remove filter for Objects</span>
-                    <svg
-                      className="h-2 w-2"
-                      stroke="currentColor"
-                      fill="none"
-                      viewBox="0 0 8 8"
+              {/* <div className="-m-1 flex flex-wrap items-center"> */}
+              <div className="w-full overflow-x-auto remove-scroll  flex flex-nowrap relative">
+                {Object.entries(selectedFilter).map(([key, data]) => {
+                  return data.map((filterItem) => (
+                    <span
+                      key={filterItem}
+                      className="m-1 inline-flex items-center rounded-full border border-gray-200 bg-white py-1.5 pl-3 pr-2 text-sm font-medium text-gray-900"
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeWidth="1.5"
-                        d="M1 1l6 6m0-6L1 7"
-                      />
-                    </svg>
-                  </button>
-                </span>
+                      <span>{filterItem}</span>
+                      <button
+                        type="button"
+                        className="ml-1 inline-flex h-4 w-4 flex-shrink-0 rounded-full p-1 text-gray-400 hover:bg-gray-200 hover:text-gray-500"
+                        onClick={() => removeItemFromFilter(filterItem, key)}
+                      >
+                        <span
+                          className="sr-only
+                    "
+                        >
+                          Remove {filterItem} from filter
+                        </span>
+                        <svg
+                          className="h-2 w-2"
+                          stroke="currentColor"
+                          fill="none"
+                          viewBox="0 0 8 8"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeWidth="1.5"
+                            d="M1 1l6 6m0-6L1 7"
+                          />
+                        </svg>
+                      </button>
+                    </span>
+                  ));
+                })}
               </div>
             </div>
           </div>
