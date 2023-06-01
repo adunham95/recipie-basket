@@ -232,11 +232,13 @@ export const Nav = (props: INavProps) => {
             ))}
           </div>
           {session && session.user ? (
-            <div className="border-t border-gray-200 pb-3 pt-4">
+            <div className="border-t border-b border-gray-200 pb-3 pt-4">
               <NavProfile
                 email={session?.user?.email || ''}
                 name={session?.user?.name || ''}
                 img={session?.user.image}
+                primaryColor={session.user.primaryColor}
+                secondaryColor={session.user.secondaryColor}
                 showImage
               />
               <div className="mt-3 space-y-1">
