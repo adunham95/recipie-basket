@@ -58,8 +58,25 @@ export const authOptions: NextAuthOptions = {
         },
       });
     },
-    jwt: async ({ token, user, account, profile, isNewUser }) => {
-      console.log('JWT Callback', { token, user, account, profile, isNewUser });
+    jwt: async ({ token, user, account, profile, trigger, session }) => {
+      console.log('JWT Callback', {
+        token,
+        user,
+        account,
+        profile,
+        trigger,
+        session,
+      });
+      if (trigger === 'update') {
+        // update your token whatever you like
+        return Promise.resolve({
+          ...token,
+          user: {
+            ...token.user,
+            ...session,
+          },
+        });
+      }
       if (user) {
         console.log(user);
         const u = user as unknown as any;

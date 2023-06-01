@@ -9,6 +9,13 @@ interface IUpdateUser {
   userID: string;
 }
 
+interface IUpdateUserResponse {
+  email: string;
+  firstName: string;
+  lastName: string;
+  name: string;
+}
+
 export const useUpdateUser = () => {
   return useMutation(updateUser);
 };
@@ -35,6 +42,9 @@ async function updateUser(input: IUpdateUser) {
     }
   `;
 
-  const data = await client.request(query, variables);
+  const data = await client.request<{ updateUser: IUpdateUserResponse }>(
+    query,
+    variables,
+  );
   return data;
 }

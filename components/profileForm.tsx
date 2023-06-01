@@ -2,9 +2,10 @@
 import React, { useEffect, useState } from 'react';
 import TextInput from './inputs/text-input';
 import { useSession } from 'next-auth/react';
+import { useUpdateUser } from '@/grahql-hook/mutation/updateUser';
 
 export const ProfileForm = () => {
-  const { data: session } = useSession();
+  const { data: session, update } = useSession();
   const [form, setForm] = useState<{
     firstName: string;
     lastName: string;
@@ -15,6 +16,8 @@ export const ProfileForm = () => {
     lastName: '',
     email: '',
   });
+
+  const { isLoading, mutate: updateUser } = useUpdateUser();
 
   useEffect(() => {
     console.log('session', session);
@@ -30,8 +33,31 @@ export const ProfileForm = () => {
     setForm({ ...form, [name]: val });
   }
 
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (session?.user) {
+      console.log(form);
+      updateUser(
+        {
+          ...form,
+          userID: session?.user.id,
+        },
+        {
+          onSuccess(data, variables, context) {
+            update(data?.updateUser);
+            console.log({ data });
+            alert('Success');
+          },
+          onError() {
+            alert('Error');
+          },
+        },
+      );
+    }
+  }
+
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <div className="space-y-12">
         <div className="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-gray-900/10 pb-12 md:grid-cols-3">
           <div>
@@ -115,12 +141,7 @@ export const ProfileForm = () => {
 
       <div className="mt-6 flex items-center justify-end gap-x-6">
         <button
-          type="button"
-          className="text-sm font-semibold leading-6 text-gray-900"
-        >
-          Cancel
-        </button>
-        <button
+          disabled={isLoading}
           type="submit"
           className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
         >
