@@ -13,7 +13,7 @@ const SearchInput = (props: ISearchInput) => {
       <label htmlFor="search" className="sr-only">
         Search
       </label>
-      <div className="relative text-gray-400 focus-within:text-gray-600 border-2 border-gray-400 border-solid rounded-md">
+      <div className="relative text-gray-400 focus-within:text-gray-600 border-solid rounded-md">
         <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
           <svg
             className="h-5 w-5"
