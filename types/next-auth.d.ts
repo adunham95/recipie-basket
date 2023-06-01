@@ -9,6 +9,7 @@ interface IAuthUser {
   primaryColor?: string;
   randomKey: string;
   secondaryColor?: string;
+  image?: string;
 }
 
 declare module 'next-auth' {

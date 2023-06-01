@@ -32,12 +32,16 @@ const NavProfile = ({
   email = '',
   showImage = false,
   containerClassName = '',
+  primaryColor,
+  secondaryColor,
 }: {
   img?: string | null | undefined;
   name?: string;
   email?: string;
   showImage?: boolean;
   containerClassName?: string;
+  primaryColor?: string;
+  secondaryColor?: string;
 }) => {
   return (
     <div className={twMerge(`flex items-center px-4`, containerClassName)}>
@@ -45,7 +49,9 @@ const NavProfile = ({
         {img && showImage && (
           <img className="h-10 w-10 rounded-full" src={img} alt="" />
         )}
-        {!img && showImage && <Avatar />}
+        {!img && showImage && (
+          <Avatar primaryColor={primaryColor} secondaryColor={secondaryColor} />
+        )}
       </div>
       <div className={`${showImage && 'ml-3'}`}>
         <div className="text-base font-medium text-gray-800">{name}</div>
@@ -118,7 +124,10 @@ export const Nav = (props: INavProps) => {
                           alt=""
                         />
                       ) : (
-                        <Avatar />
+                        <Avatar
+                          primaryColor={session?.user.primaryColor}
+                          secondaryColor={session?.user.secondaryColor}
+                        />
                       )}
                     </button>
                   </div>
@@ -135,6 +144,8 @@ export const Nav = (props: INavProps) => {
                       containerClassName="px-4 py-2"
                       email={session?.user?.email || ''}
                       name={session?.user?.name || ''}
+                      primaryColor={session?.user.primaryColor}
+                      secondaryColor={session?.user.secondaryColor}
                     />
                     <LogoutButton className="w-full text-left block px-4 py-2 text-sm text-gray-700 hover:bg-primary-light hover:bg-opacity-40" />
                     <ProfileButton className="w-full text-left block px-4 py-2 text-sm text-gray-700 hover:bg-primary-light hover:bg-opacity-40" />
