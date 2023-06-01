@@ -9,3 +9,7 @@
 .remove-scroll::-webkit-scrollbar { 
     display: none;  /* Safari and Chrome */
 }
+
+html{
+    overflow-x: hidden;
+}
