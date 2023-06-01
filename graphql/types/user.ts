@@ -62,3 +62,40 @@ builder.mutationField('createUser', (t) =>
     },
   }),
 );
+
+builder.mutationField('updateUser', (t) =>
+  t.prismaField({
+    type: 'User',
+    args: {
+      userID: t.arg.string({ required: true }),
+      firstName: t.arg.string(),
+      lastName: t.arg.string(),
+      email: t.arg.string(),
+      password: t.arg.string(),
+      image: t.arg.string(),
+    },
+    resolve: async (query, _parent, args, ctx) => {
+      console.log({ ctx });
+      const { userID, firstName, lastName, email, password, image } = args;
+
+      const hashed_password = await hash(password || '', 12);
+
+      const data = {
+        ...(firstName && { firstName }),
+        ...(lastName && { lastName }),
+        ...(email && { email: email.toLowerCase() }),
+        ...(password && { password: hashed_password }),
+        ...(image && { image }),
+      };
+
+      console.log(data);
+
+      return prisma.user.update({
+        where: {
+          id: userID,
+        },
+        data,
+      });
+    },
+  }),
+);

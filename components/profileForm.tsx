@@ -1,8 +1,35 @@
 'use client';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import TextInput from './inputs/text-input';
+import { useSession } from 'next-auth/react';
 
 export const ProfileForm = () => {
+  const { data: session } = useSession();
+  const [form, setForm] = useState<{
+    firstName: string;
+    lastName: string;
+    email: string;
+    password?: string;
+  }>({
+    firstName: '',
+    lastName: '',
+    email: '',
+  });
+
+  useEffect(() => {
+    console.log('session', session);
+    setForm({
+      ...form,
+      firstName: session?.user?.firstName || '',
+      lastName: session?.user?.lastName || '',
+      email: session?.user?.email || '',
+    });
+  }, [session]);
+
+  function handleChange(val: string, name: string) {
+    setForm({ ...form, [name]: val });
+  }
+
   return (
     <form>
       <div className="space-y-12">
@@ -22,8 +49,8 @@ export const ProfileForm = () => {
               <TextInput
                 id="firstName"
                 label="First name"
-                value={''}
-                onChange={() => ''}
+                value={form.firstName}
+                onChange={handleChange}
               />
             </div>
 
@@ -31,8 +58,8 @@ export const ProfileForm = () => {
               <TextInput
                 id="lastName"
                 label="Last name"
-                value={''}
-                onChange={() => ''}
+                value={form.lastName}
+                onChange={handleChange}
               />
             </div>
 
@@ -40,12 +67,21 @@ export const ProfileForm = () => {
               <TextInput
                 id="email"
                 label="Email"
-                value={''}
-                onChange={() => ''}
+                value={form.email}
+                onChange={handleChange}
               />
             </div>
 
             <div className="col-span-full">
+              <TextInput
+                id="password"
+                label="Password"
+                value={form?.password || ''}
+                onChange={handleChange}
+              />
+            </div>
+
+            {/* <div className="col-span-full">
               <label
                 htmlFor="photo"
                 className="block text-sm font-medium leading-6 text-gray-900"
@@ -71,8 +107,8 @@ export const ProfileForm = () => {
                 >
                   Change
                 </button>
-              </div>
-            </div>
+              </div> 
+            </div> */}
           </div>
         </div>
       </div>

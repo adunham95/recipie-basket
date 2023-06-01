@@ -46,23 +46,26 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    session: async ({ session, token }) => {
-      console.log('Session Callback', { session, token });
+    session: async ({ session, user, token }) => {
+      console.log('Session Callback', { session, user, token });
       return Promise.resolve({
         ...session,
         user: {
           ...session.user,
+          ...token.user,
           id: token.id,
           randomKey: token.randomKey,
         },
       });
     },
-    jwt: async ({ token, user }) => {
-      console.log('JWT Callback', { token, user });
+    jwt: async ({ token, user, account, profile, isNewUser }) => {
+      console.log('JWT Callback', { token, user, account, profile, isNewUser });
       if (user) {
+        console.log(user);
         const u = user as unknown as any;
         return Promise.resolve({
           ...token,
+          user: u,
           id: u.id,
           randomKey: u.randomKey,
         });
