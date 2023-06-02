@@ -17,6 +17,7 @@ interface ITextAreaProps {
   ariaDescription?: string;
   autoComplete?: string;
   rows?: number;
+  resize?: boolean;
 }
 
 const TextArea = (props: ITextAreaProps) => {
@@ -36,6 +37,7 @@ const TextArea = (props: ITextAreaProps) => {
     value,
     autoComplete,
     rows = 3,
+    resize = true,
   } = props;
   return (
     <div className={className}>
@@ -53,6 +55,7 @@ const TextArea = (props: ITextAreaProps) => {
       <div className="mt-2">
         <textarea
           name={id || name}
+          style={{ resize: resize ? 'both' : 'none' }}
           id={id}
           rows={rows}
           value={value}
