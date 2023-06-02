@@ -66,6 +66,10 @@ model Recipe {
   ingredients   Ingredients[]
   instructions  Instructions[]
   history       RecipeHisory[]
+  categories    Category[] @relation(fields: [categoryIds], references: [id])
+  categoryIds   String[]   @db.ObjectId
+
+  @@map(name: "recipe")
 }
 
 
@@ -75,9 +79,18 @@ model Ingredients{
   updatedAt     DateTime  @updatedAt @map(name: "updated_at")
   recipeID      String @db.ObjectId
   recipe        Recipe @relation(fields: [recipeID], references: [id])
-  item          String
+  ingredientID  String @db.ObjectId
+  ingredient    Ingredient @relation(fields: [ingredientID], references: [id])
   count         Float
   type          String
+}
+
+model Ingredient{
+  id            String @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt     DateTime  @default(now()) @map(name: "created_at")
+  updatedAt     DateTime  @updatedAt @map(name: "updated_at")
+  name          String @unique
+  ingredients   Ingredients[]
 }
 
 model Instructions{
@@ -97,4 +110,13 @@ model RecipeHisory{
   updatedAt     DateTime  @updatedAt @map(name: "updated_at")
   recipeID      String @db.ObjectId
   recipe        Recipe @relation(fields: [recipeID], references: [id])
+}
+
+model Category{
+  id            String @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt     DateTime  @default(now()) @map(name: "created_at")
+  updatedAt     DateTime  @updatedAt @map(name: "updated_at")
+  title         String @unique
+  recipeIDs     String[] @db.ObjectId
+  recpies       Recipe[] @relation(fields: [recipeIDs], references: [id])
 }

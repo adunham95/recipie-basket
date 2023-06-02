@@ -9,6 +9,7 @@ builder.prismaObject('Recipe', {
     user: t.relation('user', { nullable: true }),
     ingredients: t.relation('ingredients', { nullable: true }),
     instructions: t.relation('instructions', { nullable: true }),
+    categories: t.relation('categories', { nullable: true }),
   }),
 });
 
@@ -31,7 +32,7 @@ const RecipeInstructionInput = builder.inputType('RecipeInstructionInput', {
 const RecipeIngredientsInput = builder.inputType('RecipeIngredientsInput', {
   fields: (t) => ({
     count: t.float({ required: true }),
-    item: t.string({ required: true }),
+    ingredientID: t.string({ required: true }),
     type: t.string({ required: true }),
   }),
 });
@@ -44,11 +45,19 @@ builder.mutationField('createRecipe', (t) =>
       description: t.arg.string({ required: false }),
       instructions: t.arg({ type: [RecipeInstructionInput], required: true }),
       ingredients: t.arg({ type: [RecipeIngredientsInput], required: true }),
+      categoryIds: t.arg.stringList(),
     },
     resolve: async (query, _parent, args, ctx) => {
-      const { title, description = '', instructions, ingredients } = args;
+      const {
+        title,
+        description = '',
+        instructions,
+        ingredients,
+        categoryIds,
+      } = args;
+      const user = (await ctx).user;
 
-      if (!(await ctx).user) {
+      if (!user) {
         throw new Error('You have to be logged in to perform this action');
       }
 
@@ -56,7 +65,8 @@ builder.mutationField('createRecipe', (t) =>
         data: {
           title,
           description: description || '',
-          userID: (await ctx)?.user?.id || '',
+          userID: user?.id || '',
+          categoryIds: categoryIds || [],
           instructions: {
             createMany: {
               data: instructions,
