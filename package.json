@@ -11,7 +11,10 @@
     "build-storybook": "storybook build",
     "postinstall": "prisma generate",
     "generate-primsa": "prisma generate",
-    "prisma-seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+    "prisma-seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts",
+    "ts-lint": "tsc — noEmit — incremental — watch",
+    "prepare": "husky install",
+    "ts-lint-commit-hook": "tsc --noEmit --incremental"
   },
   "dependencies": {
     "@next-auth/prisma-adapter": "^0.4.4-canary.81",
@@ -56,6 +59,7 @@
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-storybook": "^0.6.12",
+    "husky": "^8.0.0",
     "prisma": "^4.14.1",
     "storybook": "^7.0.18",
     "ts-node": "^10.9.1"
