@@ -10,7 +10,7 @@ interface IEmptyBlockProps {
 }
 
 const EmptyBlock = (props: IEmptyBlockProps) => {
-  const { title, subTitle, buttonText, children } = props;
+  const { title, subTitle, buttonText, children, buttonClick } = props;
   return (
     <div className="text-center col-span-full">
       <div className="text-gray-500 fill-gray-500 mx-auto h-12 w-12 ">
@@ -20,7 +20,7 @@ const EmptyBlock = (props: IEmptyBlockProps) => {
       {subTitle && <p className="mt-1 text-sm text-gray-500">{subTitle}</p>}
       <div className="mt-6">
         {buttonText && (
-          <Button className="inline-flex items-center">
+          <Button className="inline-flex items-center" onClick={buttonClick}>
             <svg
               className="-ml-0.5 mr-1.5 h-5 w-5"
               viewBox="0 0 20 20"
