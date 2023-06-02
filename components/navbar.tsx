@@ -18,6 +18,10 @@ const links: ILinkType[] = [
     path: APP_URL.RECIPES,
     label: 'Recipes',
   },
+  {
+    path: APP_URL.NEW_RECIPE,
+    label: 'New Recipe',
+  },
 ];
 
 const profileLinks: ILinkType[] = [];
