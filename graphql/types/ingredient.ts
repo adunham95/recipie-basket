@@ -5,6 +5,7 @@ builder.prismaObject('Ingredient', {
   fields: (t) => ({
     id: t.exposeID('id'),
     name: t.exposeString('name'),
+    image: t.exposeString('image'),
   }),
 });
 
@@ -21,10 +22,11 @@ builder.mutationField('createIngredient', (t) =>
     type: 'Ingredient',
     args: {
       name: t.arg.string({ required: true }),
+      image: t.arg.string(),
     },
     resolve: async (query, _parent, args, ctx) => {
       console.log({ ctx });
-      const { name } = args;
+      const { name, image = '' } = args;
 
       if (!(await ctx).user) {
         throw new Error('You have to be logged in to perform this action');
@@ -34,6 +36,7 @@ builder.mutationField('createIngredient', (t) =>
         ...query,
         data: {
           name,
+          image,
         },
       });
     },

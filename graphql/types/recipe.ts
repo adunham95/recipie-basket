@@ -10,6 +10,8 @@ builder.prismaObject('Recipe', {
     ingredients: t.relation('ingredients', { nullable: true }),
     instructions: t.relation('instructions', { nullable: true }),
     categories: t.relation('categories', { nullable: true }),
+    image: t.exposeString('image', { nullable: true }),
+    defaultServingSize: t.exposeInt('serving'),
   }),
 });
 
@@ -43,6 +45,8 @@ builder.mutationField('createRecipe', (t) =>
     args: {
       title: t.arg.string({ required: true }),
       description: t.arg.string({ required: false }),
+      image: t.arg.string(),
+      serving: t.arg.int(),
       instructions: t.arg({ type: [RecipeInstructionInput], required: true }),
       ingredients: t.arg({ type: [RecipeIngredientsInput], required: true }),
       categoryIds: t.arg.stringList(),
@@ -51,6 +55,8 @@ builder.mutationField('createRecipe', (t) =>
       const {
         title,
         description = '',
+        image = '',
+        serving,
         instructions,
         ingredients,
         categoryIds,
@@ -67,6 +73,8 @@ builder.mutationField('createRecipe', (t) =>
           description: description || '',
           userID: user?.id || '',
           categoryIds: categoryIds || [],
+          image,
+          serving,
           instructions: {
             createMany: {
               data: instructions,

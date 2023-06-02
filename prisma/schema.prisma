@@ -61,6 +61,8 @@ model Recipe {
   updatedAt     DateTime  @updatedAt @map(name: "updated_at")
   title         String
   description   String
+  image         String
+  serving       Int
   userID        String   @db.ObjectId
   user          User @relation(fields: [userID], references: [id])
   ingredients   Ingredients[]
@@ -90,6 +92,7 @@ model Ingredient{
   createdAt     DateTime  @default(now()) @map(name: "created_at")
   updatedAt     DateTime  @updatedAt @map(name: "updated_at")
   name          String @unique
+  image         String
   ingredients   Ingredients[]
 }
 
