@@ -6,6 +6,7 @@ import TextArea from '../inputs/text-area';
 import CoverImageUpload from '../inputs/cover-image-upload';
 import { Button } from '../button/button';
 import EmptyBlock from '../emptyBlock/emptyBlock';
+import { IIngredient } from '@/types/ingredient';
 
 interface INewRecipeProps {
   onSave?: () => void;
@@ -15,6 +16,12 @@ const NewRecipe = (props: INewRecipeProps) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [coverImage, setCoverImage] = useState('');
+  const [ingredients, setIngredients] = useState<IIngredient[]>([]);
+
+  function addNewIngredient() {
+    setIngredients([{ id: '1', title: '' }]);
+  }
+
   return (
     <form>
       <div className="space-y-12">

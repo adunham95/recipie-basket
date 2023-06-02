@@ -1,6 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { getClient } from '../client';
 import { gql } from 'graphql-request';
+import { IAuthUser } from '@/types/next-auth';
 
 export const useCreateUser = () => {
   return useMutation(createUser);
@@ -36,10 +37,14 @@ async function createUser(input: ICreateUser) {
         lastName
         id
         name
+        image
       }
     }
   `;
 
-  const data = await client.request(query, variables);
+  const data = await client.request<{ createUser: IAuthUser }>(
+    query,
+    variables,
+  );
   return data;
 }

@@ -1,13 +1,11 @@
 import { useMutation } from '@tanstack/react-query';
 import { getClient } from '../client';
 import { gql } from 'graphql-request';
+import { IIngredient } from '@/types/ingredient';
 
 interface ICreateIngredient {
   name: string;
-}
-
-interface ICreateIngredientResponse {
-  name: string;
+  image?: string;
 }
 
 export const useCreateIngredient = () => {
@@ -25,12 +23,13 @@ async function createIngredient(input: ICreateIngredient) {
       createIngredient(name: $name) {
         id
         name
+        image
       }
     }
   `;
 
   const data = await client.request<{
-    createIngredient: ICreateIngredientResponse;
+    createIngredient: IIngredient[];
   }>(query, variables);
   return data;
 }

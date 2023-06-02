@@ -1,19 +1,13 @@
 import { useMutation } from '@tanstack/react-query';
 import { getClient } from '../client';
 import { gql } from 'graphql-request';
+import { IAuthUser } from '@/types/next-auth';
 interface IUpdateUser {
   firstName?: string;
   lastName?: string;
   email?: string;
   password?: string;
   userID: string;
-}
-
-interface IUpdateUserResponse {
-  email: string;
-  firstName: string;
-  lastName: string;
-  name: string;
 }
 
 export const useUpdateUser = () => {
@@ -34,15 +28,20 @@ async function updateUser(input: IUpdateUser) {
         firstName: $firstName
         lastName: $lastName
         password: $password) {
-        email
-        firstName
-        lastName
-        name
+          email
+          firstName
+          image
+          primaryColor
+          secondaryColor
+          lastName
+          id
+          name
+          image
       }
     }
   `;
 
-  const data = await client.request<{ updateUser: IUpdateUserResponse }>(
+  const data = await client.request<{ updateUser: IAuthUser }>(
     query,
     variables,
   );

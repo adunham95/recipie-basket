@@ -1,11 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { getClient } from '../client';
 import { gql } from 'graphql-request';
-
-interface IAllIngredientsResponse {
-  name: string;
-  image?: string;
-}
+import { IIngredient } from '@/types/ingredient';
 
 export const useAllIngredients = () => {
   return useQuery(['all-ingredients'], allIngredients);
@@ -25,7 +21,7 @@ async function allIngredients() {
   `;
 
   const data = await client.request<{
-    allIngredients: IAllIngredientsResponse;
+    allIngredients: IIngredient[];
   }>(query);
   return data;
 }
