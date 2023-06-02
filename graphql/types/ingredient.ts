@@ -5,7 +5,7 @@ builder.prismaObject('Ingredient', {
   fields: (t) => ({
     id: t.exposeID('id'),
     name: t.exposeString('name'),
-    image: t.exposeString('image'),
+    image: t.exposeString('image', { nullable: true }),
   }),
 });
 
