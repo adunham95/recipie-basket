@@ -8,19 +8,19 @@ import { Avatar } from './avatar';
 import { twMerge } from 'tailwind-merge';
 import { APP_URL } from '@/lib/appUrls';
 
-const links = [
+interface ILinkType {
+  path: string;
+  label: string;
+}
+
+const links: ILinkType[] = [
   {
-    path: APP_URL.DASHBOARD,
-    label: 'Dashboard',
+    path: APP_URL.RECIPES,
+    label: 'Recipes',
   },
 ];
 
-const profileLinks = [
-  {
-    path: '/dashboard-myrecipies',
-    label: 'My Recipies',
-  },
-];
+const profileLinks: ILinkType[] = [];
 
 interface INavProps {
   Slot1?: React.ReactNode;

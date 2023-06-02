@@ -1,6 +1,6 @@
 export enum APP_URL {
   PROFILE = '/profile',
-  DASHBOARD = '/dashboard',
+  RECIPES = '/recipes',
 }
 
 export enum AUTH_URL {
