@@ -32,12 +32,14 @@ builder.mutationField('createIngredient', (t) =>
         throw new Error('You have to be logged in to perform this action');
       }
 
+      const data = {
+        name,
+        ...(image && { image }),
+      };
+
       return prisma.ingredient.create({
         ...query,
-        data: {
-          name,
-          image,
-        },
+        data,
       });
     },
   }),

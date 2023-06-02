@@ -46,7 +46,7 @@ builder.mutationField('createRecipe', (t) =>
       title: t.arg.string({ required: true }),
       description: t.arg.string({ required: false }),
       image: t.arg.string(),
-      serving: t.arg.int(),
+      serving: t.arg.int({ required: true }),
       instructions: t.arg({ type: [RecipeInstructionInput], required: true }),
       ingredients: t.arg({ type: [RecipeIngredientsInput], required: true }),
       categoryIds: t.arg.stringList(),
