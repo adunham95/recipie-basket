@@ -5,13 +5,25 @@ export interface ILabelBarProps {
   label?: string;
   htmlFor?: string;
   labelClassName?: string;
+  labelContainerClassName?: string;
   labelHintSlot?: React.ReactNode;
 }
 
 const LabelBar = (props: ILabelBarProps) => {
-  const { htmlFor, label, labelClassName = '', labelHintSlot } = props;
+  const {
+    htmlFor,
+    label,
+    labelClassName = '',
+    labelHintSlot,
+    labelContainerClassName,
+  } = props;
   return (
-    <div className="flex justify-between">
+    <div
+      className={twMerge(
+        'flex justify-between items-center',
+        labelContainerClassName,
+      )}
+    >
       {label ? (
         <label
           htmlFor={htmlFor}

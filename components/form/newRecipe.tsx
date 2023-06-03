@@ -7,6 +7,10 @@ import CoverImageUpload from '../inputs/cover-image-upload';
 import { Button } from '../button/button';
 import EmptyBlock from '../emptyBlock/emptyBlock';
 import { IIngredientItem } from '@/types/ingredinetItem';
+import { IInstructionItem } from '@/types/instructionItem';
+import IconButton from '../button/iconButton';
+import LabelBar from '../inputs/labelBar';
+import SelectInput from '../inputs/select';
 
 interface INewRecipeProps {
   onSave?: () => void;
@@ -17,12 +21,26 @@ const NewRecipe = (props: INewRecipeProps) => {
   const [description, setDescription] = useState('');
   const [coverImage, setCoverImage] = useState('');
   const [ingredients, setIngredients] = useState<IIngredientItem[]>([]);
+  const [instructions, setInstruction] = useState<IInstructionItem[]>([]);
 
   function addNewIngredient() {
-    setIngredients([{ id: '1', count: 0, ingredientID: '', type: '' }]);
+    const newItem = {
+      id: `${ingredients.length + 1}`,
+      count: 0,
+      ingredientID: '',
+      type: '',
+    };
+    setIngredients([...ingredients, newItem]);
   }
 
-  console.log(ingredients);
+  function addNewInstruction() {
+    const newItem = {
+      id: `${instructions.length + 1}`,
+      order: instructions.length,
+      description: `Instruction ${instructions.length + 1}`,
+    };
+    setInstruction([...instructions, newItem]);
+  }
 
   return (
     <form>
@@ -74,27 +92,50 @@ const NewRecipe = (props: INewRecipeProps) => {
             </EmptyBlock>
           ) : (
             <>
-              {ingredients.map((ing) => (
-                <span key={ing.id}>{ing.count}</span>
+              {ingredients.map((ing, i) => (
+                <NewIngredientItem key={ing.id} ingredient={ing} index={i} />
               ))}
+              <Button
+                onClick={addNewIngredient}
+                size="lg"
+                className="col-span-full"
+              >
+                Add Another Ingredient
+              </Button>
             </>
           )}
         </FieldSet>
 
         <FieldSet title="Instructions" subTitle="Add your list of instructions">
-          <EmptyBlock
-            title="No Instructions"
-            subTitle="Get started by adding some instructions,"
-            buttonText="Add Instruction"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="mx-auto h-12 w-12 text-gray-500 fill-gray-500"
-              viewBox="0 0 512 512"
+          {instructions.length === 0 ? (
+            <EmptyBlock
+              title="No Instructions"
+              subTitle="Get started by adding some instructions,"
+              buttonText="Add Instruction"
+              buttonClick={addNewInstruction}
             >
-              <path d="M416 32a95.17 95.17 0 0 0-57.73 19.74C334.93 20.5 298 0 256 0s-78.93 20.5-102.27 51.74A95.56 95.56 0 0 0 0 128c0 41.74 64 224 64 224v128a32 32 0 0 0 32 32h320a32 32 0 0 0 32-32V352s64-182.26 64-224a96 96 0 0 0-96-96zm0 448H96v-96h320zm0-128h-44.09L384 201.25a8 8 0 0 0-7.33-8.61l-16-1.28h-.65a8 8 0 0 0-8 7.37L339.8 352h-68.46V200a8 8 0 0 0-8-8h-16a8 8 0 0 0-8 8v152H172.2l-12.27-153.3a8 8 0 0 0-8-7.37h-.65l-16 1.28a8 8 0 0 0-7.33 8.61L140.09 352H96S32 150.7 32 128a64.07 64.07 0 0 1 64-64 63.22 63.22 0 0 1 38.39 13.24l25.68 19.48 19.3-25.83C197.83 46.18 225.77 32 256 32s58.17 14.18 76.63 38.89l19.3 25.83 25.68-19.48A63.22 63.22 0 0 1 416 64a64.07 64.07 0 0 1 64 64c0 22.7-64 224-64 224z" />
-            </svg>
-          </EmptyBlock>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="mx-auto h-12 w-12 text-gray-500 fill-gray-500"
+                viewBox="0 0 512 512"
+              >
+                <path d="M416 32a95.17 95.17 0 0 0-57.73 19.74C334.93 20.5 298 0 256 0s-78.93 20.5-102.27 51.74A95.56 95.56 0 0 0 0 128c0 41.74 64 224 64 224v128a32 32 0 0 0 32 32h320a32 32 0 0 0 32-32V352s64-182.26 64-224a96 96 0 0 0-96-96zm0 448H96v-96h320zm0-128h-44.09L384 201.25a8 8 0 0 0-7.33-8.61l-16-1.28h-.65a8 8 0 0 0-8 7.37L339.8 352h-68.46V200a8 8 0 0 0-8-8h-16a8 8 0 0 0-8 8v152H172.2l-12.27-153.3a8 8 0 0 0-8-7.37h-.65l-16 1.28a8 8 0 0 0-7.33 8.61L140.09 352H96S32 150.7 32 128a64.07 64.07 0 0 1 64-64 63.22 63.22 0 0 1 38.39 13.24l25.68 19.48 19.3-25.83C197.83 46.18 225.77 32 256 32s58.17 14.18 76.63 38.89l19.3 25.83 25.68-19.48A63.22 63.22 0 0 1 416 64a64.07 64.07 0 0 1 64 64c0 22.7-64 224-64 224z" />
+              </svg>
+            </EmptyBlock>
+          ) : (
+            <>
+              {instructions.map((inst) => (
+                <NewInstructionItem key={inst.id} instruction={inst} />
+              ))}
+              <Button
+                onClick={addNewInstruction}
+                size="lg"
+                className="col-span-full"
+              >
+                Add Another Instruction
+              </Button>
+            </>
+          )}
         </FieldSet>
       </div>
 
@@ -106,5 +147,152 @@ const NewRecipe = (props: INewRecipeProps) => {
     </form>
   );
 };
+
+function NewIngredientItem({
+  ingredient,
+  index = 0,
+}: {
+  ingredient: IIngredientItem;
+  index?: number;
+}) {
+  return (
+    <div className="col-span-full  group">
+      <div className="grid col-span-1 gap-x-2 gap-y-1 md:grid-cols-3">
+        <LabelBar
+          labelContainerClassName="col-span-full"
+          label={`Ingredient ${index}`}
+          labelHintSlot={
+            <div className="flex justify-end text-gray-500">
+              <IconButton
+                title="Remove Items"
+                className=" bg-gray-400 p-2 text-white rounded-full hover:bg-gray-500  focus-visible:outline-gray-600 md:scale-0 group-hover:scale-100 transition-transform duration-300"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  stroke="currentColor"
+                  className="w-4 h-4"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75"
+                  />
+                </svg>
+              </IconButton>
+              <IconButton
+                title="Delete"
+                className="rounded-full bg-red-400 p-2 text-white focus-visible:outline-red-600 ml-1 md:scale-0 group-hover:scale-100  transition-transform  duration-300"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  stroke="currentColor"
+                  className="w-4 h-4"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </IconButton>
+            </div>
+          }
+        />
+        <SelectInput
+          className="col-span-1"
+          label="Ingredient name"
+          id={`ingredient-${index}-name`}
+          value={''}
+          onChange={() => null}
+          options={[{ value: 'beef', label: 'Beef' }]}
+        />
+        <TextInput
+          className="col-span-1"
+          label="Ingredient Count"
+          id={`ingredient-${index}-count`}
+          type="number"
+          value="1"
+          onChange={() => null}
+        />
+        <SelectInput
+          className="col-span-1"
+          label="Ingredient name"
+          id={`ingredient-${index}-name`}
+          value={''}
+          onChange={() => null}
+          options={[
+            { value: 'gallon', label: 'Gallon' },
+            { value: 'pint', label: 'Pint' },
+          ]}
+        />
+      </div>
+    </div>
+  );
+}
+
+function NewInstructionItem({
+  instruction,
+}: {
+  instruction: IInstructionItem;
+}) {
+  return (
+    <div className="col-span-full  group">
+      <TextArea
+        label={`Instruction ${instruction.order + 1}`}
+        id={`${instruction.id}-description`}
+        value={instruction.description}
+        onChange={() => null}
+        labelHintSlot={
+          <div className="flex justify-end text-gray-500">
+            <IconButton
+              title="Remove Items"
+              className=" bg-gray-400 p-2 text-white rounded-full hover:bg-gray-500  focus-visible:outline-gray-600 md:scale-0 group-hover:scale-100 transition-transform duration-300"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="w-4 h-4"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75"
+                />
+              </svg>
+            </IconButton>
+            <IconButton
+              title="Delete"
+              className="rounded-full bg-red-400 p-2 text-white focus-visible:outline-red-600 ml-1 md:scale-0 group-hover:scale-100  transition-transform  duration-300"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="w-4 h-4"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </IconButton>
+          </div>
+        }
+      />
+    </div>
+  );
+}
 
 export default NewRecipe;
