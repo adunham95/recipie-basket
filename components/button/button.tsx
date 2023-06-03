@@ -2,7 +2,7 @@ import Link from 'next/link';
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
 
-interface IButtonProps {
+export interface IButtonProps {
   type?: 'button' | 'submit';
   onClick?: () => void;
   variant?: 'filled' | 'text' | 'outline';
