@@ -1,20 +1,12 @@
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
-import InputWrapper from './inputWrapper';
+import InputWrapper, { IDefaultInputWrapperProps } from './inputWrapper';
 
-interface ITextInputProps {
-  id: string;
-  name?: string;
-  label?: string;
+interface ITextInputProps extends IDefaultInputWrapperProps {
   type?: React.HTMLInputTypeAttribute;
   placeholder?: string;
-  helperText?: string;
-  errorText?: string;
-  hasError?: boolean;
   value: string;
   onChange: (text: string, name: string, e: React.ChangeEvent) => void;
-  className?: string;
-  labelClassName?: string;
   inputClassName?: string;
   ariaDescription?: string;
   autoComplete?: string;

@@ -1,18 +1,10 @@
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
-import InputWrapper from './inputWrapper';
+import InputWrapper, { IDefaultInputWrapperProps } from './inputWrapper';
 
-interface ICoverImageUploadProps {
-  id: string;
-  name?: string;
-  label?: string;
-  helperText?: string;
-  errorText?: string;
-  hasError?: boolean;
+interface ICoverImageUploadProps extends IDefaultInputWrapperProps {
   value: string;
   onChange: (text: string, name: string) => void;
-  className?: string;
-  labelClassName?: string;
   ariaDescription?: string;
   resize?: boolean;
 }
