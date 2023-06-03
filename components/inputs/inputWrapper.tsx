@@ -1,17 +1,15 @@
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
+import LabelBar, { ILabelBarProps } from './labelBar';
 
-export interface IDefaultInputWrapperProps {
+export interface IDefaultInputWrapperProps extends ILabelBarProps {
   id: string;
   name?: string;
-  label?: string;
   helperText?: string;
   errorText?: string;
   hasError?: boolean;
   className?: string;
-  labelClassName?: string;
   inputWrapperClassName?: string;
-  labelHintSlot?: React.ReactNode;
 }
 
 interface IInputWrapperProps extends IDefaultInputWrapperProps {
@@ -22,34 +20,17 @@ const InputWrapper = (props: IInputWrapperProps) => {
   const {
     id,
     name,
-    label,
     helperText,
     errorText,
     hasError = false,
     className = '',
-    labelClassName = '',
     inputWrapperClassName = '',
     children,
-    labelHintSlot,
+    htmlFor,
   } = props;
   return (
     <div className={className}>
-      <div className="flex justify-between">
-        {label ? (
-          <label
-            htmlFor={id || name}
-            className={twMerge(
-              'block text-sm font-medium leading-6 text-gray-900',
-              labelClassName,
-            )}
-          >
-            {label}
-          </label>
-        ) : (
-          <span></span>
-        )}
-        {labelHintSlot}
-      </div>
+      <LabelBar htmlFor={htmlFor || id || name} {...props} />
       <div className={twMerge('mt-2', inputWrapperClassName)}>{children}</div>
       {helperText && !hasError && (
         <p
