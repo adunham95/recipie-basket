@@ -8,8 +8,12 @@ interface ICreateFood {
   image?: string;
 }
 
-export const useCreateFood = () => {
-  return useMutation(createFood);
+export const useCreateFood = ({
+  onSuccess = () => null,
+}: {
+  onSuccess?: () => void;
+}) => {
+  return useMutation(createFood, { onSuccess });
 };
 
 async function createFood(input: ICreateFood) {
