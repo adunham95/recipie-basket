@@ -34,7 +34,7 @@ const RecipeInstructionInput = builder.inputType('RecipeInstructionInput', {
 const RecipeIngredientsInput = builder.inputType('RecipeIngredientsInput', {
   fields: (t) => ({
     count: t.float({ required: true }),
-    ingredientID: t.string({ required: true }),
+    foodID: t.string({ required: true }),
     type: t.string({ required: true }),
   }),
 });

@@ -81,13 +81,13 @@ model Ingredients{
   updatedAt     DateTime  @updatedAt @map(name: "updated_at")
   recipeID      String @db.ObjectId
   recipe        Recipe @relation(fields: [recipeID], references: [id])
-  ingredientID  String @db.ObjectId
-  ingredient    Ingredient @relation(fields: [ingredientID], references: [id])
+  foodID  String @db.ObjectId
+  food    Food @relation(fields: [foodID], references: [id])
   count         Float
   type          String
 }
 
-model Ingredient{
+model Food{
   id            String @id @default(auto()) @map("_id") @db.ObjectId
   createdAt     DateTime  @default(now()) @map(name: "created_at")
   updatedAt     DateTime  @updatedAt @map(name: "updated_at")

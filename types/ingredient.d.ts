@@ -1,4 +1,4 @@
-export interface IIngredient {
+export interface IFood {
   id: string;
   title: string;
   image?: string;

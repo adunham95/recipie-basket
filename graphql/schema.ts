@@ -4,7 +4,7 @@ import './types/recipe';
 import './types/ingredients';
 import './types/instructions';
 import './types/categories';
-import './types/ingredient';
+import './types/food';
 import { builder } from './builder';
 
 export const schema = builder.toSchema();

@@ -1,9 +1,9 @@
-import { IIngredient } from './ingredient';
+import { IFood } from './ingredient';
 
 interface IIngredientItem {
   id: string;
-  ingredientID: string;
-  ingredient?: IIngredient;
+  foodID: string;
+  food?: IFood;
   count: number;
   type: string;
 }

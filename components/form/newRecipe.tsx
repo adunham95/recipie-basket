@@ -27,7 +27,7 @@ const NewRecipe = (props: INewRecipeProps) => {
     const newItem = {
       id: `${ingredients.length + 1}`,
       count: 0,
-      ingredientID: '',
+      foodID: '',
       type: '',
     };
     setIngredients([...ingredients, newItem]);
@@ -160,7 +160,7 @@ function NewIngredientItem({
       <div className="grid col-span-1 gap-x-2 gap-y-1 md:grid-cols-3">
         <LabelBar
           labelContainerClassName="col-span-full"
-          label={`Ingredient ${index}`}
+          label={`Ingredient ${index + 1}`}
           labelHintSlot={
             <div className="flex justify-end text-gray-500">
               <IconButton

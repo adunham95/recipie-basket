@@ -1,7 +1,7 @@
 import { prisma } from '@/lib/prisma';
 import { builder } from '../builder';
 
-builder.prismaObject('Ingredient', {
+builder.prismaObject('Food', {
   fields: (t) => ({
     id: t.exposeID('id'),
     name: t.exposeString('name'),
@@ -9,17 +9,17 @@ builder.prismaObject('Ingredient', {
   }),
 });
 
-builder.queryField('allIngredient', (t) =>
+builder.queryField('allFood', (t) =>
   t.prismaField({
-    type: ['Ingredient'],
+    type: ['Food'],
     resolve: (query, _parent, _args, _ctx, _info) =>
-      prisma.ingredient.findMany({ ...query }),
+      prisma.food.findMany({ ...query }),
   }),
 );
 
-builder.mutationField('createIngredient', (t) =>
+builder.mutationField('createFood', (t) =>
   t.prismaField({
-    type: 'Ingredient',
+    type: 'Food',
     args: {
       name: t.arg.string({ required: true }),
       image: t.arg.string(),
@@ -37,7 +37,7 @@ builder.mutationField('createIngredient', (t) =>
         ...(image && { image }),
       };
 
-      return prisma.ingredient.create({
+      return prisma.food.create({
         ...query,
         data,
       });
