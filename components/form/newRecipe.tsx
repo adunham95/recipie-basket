@@ -46,6 +46,10 @@ const NewRecipe = (props: INewRecipeProps) => {
     setInstruction([...instructions, newItem]);
   }
 
+  // function save() {
+  //   const {};
+  // }
+
   return (
     <>
       <Slideover
@@ -56,9 +60,6 @@ const NewRecipe = (props: INewRecipeProps) => {
       >
         <NewFood onSave={() => setNewFoodItemStatus(!newFoodItemOpen)} />
       </Slideover>
-      <button onClick={() => setNewFoodItemStatus(!newFoodItemOpen)}>
-        OPen
-      </button>
       <form>
         <div className="space-y-12">
           <FieldSet title="Details">

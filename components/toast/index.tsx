@@ -153,7 +153,7 @@ const ToastContainer = () => {
   const { toasts } = useToast();
   return (
     <ClientOnlyPortal>
-      <div className="absolute z-50 top-[60px] sm:top-0 right-0 p-2 max-w-[300px] w-full">
+      <div className="fixed z-50 top-[60px] sm:top-0 right-0 p-2 max-w-[300px] w-full">
         {toasts.map((item: IToast) => (
           <Toast key={item.id} {...item} />
         ))}

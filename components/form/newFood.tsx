@@ -4,6 +4,7 @@ import { Button } from '../button/button';
 import { useCreateFood } from '@/grahql-hook/mutation/createFood';
 import { useQueryClient } from '@tanstack/react-query';
 import { useAllFood } from '@/grahql-hook/query/getFood';
+import { useToast } from '@/stores/toast';
 
 interface INewFoodProps {
   onSave?: () => void;
@@ -14,12 +15,15 @@ const NewFood = (props: INewFoodProps) => {
   const { onSave = () => null } = props;
   const [name, setFoodName] = useState('');
   const { refetch: refetchFood } = useAllFood();
+  const { addToast } = useToast();
   const { mutate, isLoading } = useCreateFood({
     onSuccess: () => {
       console.log('isSuccess');
-      onSave();
+      addToast(`${name} food Added`, 'success');
       queryClient.invalidateQueries(['all-food']);
       refetchFood();
+      setFoodName('');
+      onSave();
     },
   });
 
