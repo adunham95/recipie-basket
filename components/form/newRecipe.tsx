@@ -14,6 +14,7 @@ import SelectInput from '../inputs/select';
 import Slideover from '../overlay/slideover';
 import NewFood from './newFood';
 import { useAllFood } from '@/grahql-hook/query/getFood';
+import TypeAheadInput from '../inputs/typeAheadInput';
 
 interface INewRecipeProps {
   onSave?: () => void;
@@ -235,7 +236,17 @@ function NewIngredientItem({
             </div>
           }
         />
-        <SelectInput
+        <TypeAheadInput
+          className="group/ingredientName col-span-1"
+          label="Ingredient name"
+          id={`ingredient-${index}-name`}
+          value={''}
+          onChange={() => null}
+          options={allFood.map((food) => {
+            return { value: food.id, label: food.name };
+          })}
+        />
+        {/* <SelectInput
           className="group/ingredientName col-span-1"
           label="Ingredient name"
           id={`ingredient-${index}-name`}
@@ -268,7 +279,7 @@ function NewIngredientItem({
               </IconButton>
             )
           }
-        />
+        /> */}
         <TextInput
           className="col-span-1"
           label="Ingredient Count"
