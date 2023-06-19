@@ -27,6 +27,12 @@ const TypeAheadInput = (props: ITypeAheadInputProps) => {
     options,
   } = props;
   const [optionsOpen, setOptionsOpen] = useState(false);
+  const [text, setText] = useState('');
+
+  function getValue(id: string) {
+    console.log(id);
+  }
+
   return (
     <InputWrapper {...props}>
       <div className="relative">
@@ -39,6 +45,8 @@ const TypeAheadInput = (props: ITypeAheadInputProps) => {
           aria-expanded="false"
           onFocus={() => setOptionsOpen(true)}
           onBlur={() => setOptionsOpen(false)}
+          value={text}
+          onChange={(e) => setText(e.target.value)}
         />
         <button
           type="button"
@@ -72,42 +80,49 @@ const TypeAheadInput = (props: ITypeAheadInputProps) => {
 
         Active: "text-white bg-indigo-600", Not Active: "text-gray-900"
       --> */}
-          <li
-            className="relative cursor-default select-none py-2 pl-3 pr-9 text-gray-900"
-            id="option-0"
-            role="option"
-            tabIndex={-1}
-          >
-            <div className="flex items-center">
-              <img
-                src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                alt=""
-                className="h-6 w-6 flex-shrink-0 rounded-full"
-              />
-              {/* <!-- Selected: "font-semibold" --> */}
-              <span className="ml-3 truncate">Leslie Alexander</span>
-            </div>
+          {options
+            .filter((opt) =>
+              opt.label.toLowerCase().includes(text.toLowerCase()),
+            )
+            .map((opt) => (
+              <li
+                key={opt.value}
+                className="relative cursor-default select-none py-2 pl-3 pr-9 text-gray-900"
+                id="option-0"
+                role="option"
+                tabIndex={-1}
+              >
+                <div className="flex items-center">
+                  <img
+                    src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                    alt=""
+                    className="h-6 w-6 flex-shrink-0 rounded-full"
+                  />
+                  {/* <!-- Selected: "font-semibold" --> */}
+                  <span className="ml-3 truncate">{opt.label}</span>
+                </div>
 
-            {/* <!--
+                {/* <!--
           Checkmark, only display for selected option.
 
           Active: "text-white", Not Active: "text-indigo-600"
         --> */}
-            <span className="absolute inset-y-0 right-0 flex items-center pr-4 text-indigo-600">
-              <svg
-                className="h-5 w-5"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                aria-hidden="true"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </span>
-          </li>
+                <span className="absolute inset-y-0 right-0 flex items-center pr-4 text-indigo-600">
+                  <svg
+                    className="h-5 w-5"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </span>
+              </li>
+            ))}
 
           {/* <!-- More items... --> */}
         </ul>
